@@ -26,11 +26,12 @@
   height: 42px;
   border-radius: 12px;
   background: linear-gradient(135deg, #fef3c7 0%, #fb923c 50%, #f97316 100%);
+  background-size: 200% 200%;
+  animation: gradientShift 4s ease-in-out infinite;
   font-family: 'Pacifico', 'Caveat', 'Inter', sans-serif;
   font-weight: 600;
   letter-spacing: 1px;
   color: #0f172a;
-  animation: none;
 }
 
 .brand-text {
@@ -39,10 +40,12 @@
   letter-spacing: 0.04em;
   text-transform: uppercase;
   background: linear-gradient(90deg, #fef3c7 0%, #fb923c 50%, #f97316 100%);
+  background-size: 200% 200%;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
   text-shadow: 0 2px 8px rgba(249, 115, 22, 0.35);
+  animation: gradientShift 4s ease-in-out infinite;
 }
 
 .navbar .nav-link {
@@ -93,6 +96,29 @@
 
 .login-card {
   border: none;
+}
+
+.brand-gradient {
+  background: linear-gradient(90deg, #2563eb 0%, #7c3aed 50%, #ec4899 100%);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 2px 8px rgba(99, 102, 241, 0.28);
+  animation: gradientShift 4s ease-in-out infinite;
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 .password-field {

@@ -104,8 +104,10 @@ const LoginComponent = () => {
     <div className='row justify-content-center'>
       <div className='col-12 col-md-8 col-lg-5'>
         <div className='card page-card shadow-sm login-card'>
-          <div className='card-header bg-white border-0 pt-4 px-4'>
-            <h2 className='page-title'>Welcome to WorkSphere</h2>
+          <div className='card-header bg-white border-0 pt-4 px-4 text-center'>
+            <h2 className='page-title'>
+              Welcome to <span className='brand-gradient'>WorkSphere</span>
+            </h2>
             <p className='page-subtitle mb-0'>Sign in to access your dashboard.</p>
           </div>
           <div className='card-body px-4 pb-4'>
