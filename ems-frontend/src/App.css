@@ -26,15 +26,23 @@
   height: 42px;
   border-radius: 12px;
   background: rgba(255, 255, 255, 0.2);
-  font-weight: 700;
+  font-family: 'Pacifico', 'Caveat', 'Inter', sans-serif;
+  font-weight: 600;
   letter-spacing: 1px;
   color: #fff;
-  animation: pulseSoft 3s ease-in-out infinite;
+  animation: none;
 }
 
 .brand-text {
-  font-weight: 600;
-  color: #f8fafc;
+  font-family: 'Unbounded', 'Cinzel', 'Poppins', 'Inter', sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  background: linear-gradient(90deg, #ffffff 0%, #93c5fd 50%, #e0f2fe 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 2px 8px rgba(59, 130, 246, 0.35);
 }
 
 .navbar .nav-link {
@@ -52,6 +60,51 @@
   padding: 2rem;
   box-shadow: 0 20px 45px rgba(15, 23, 42, 0.08);
   animation: floatIn 0.5s ease-out;
+}
+
+.login-card {
+  border: none;
+}
+
+.password-field {
+  position: relative;
+}
+
+.password-field .form-control {
+  padding-right: 3rem;
+}
+
+.password-toggle {
+  position: absolute;
+  top: 50%;
+  right: 0.85rem;
+  transform: translateY(-50%);
+  border: none;
+  background: transparent;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #64748b;
+  transition: transform 0.2s ease, color 0.2s ease, background 0.2s ease;
+}
+
+.password-toggle svg {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+}
+
+.password-toggle:hover {
+  color: #2563eb;
+  background: rgba(37, 99, 235, 0.12);
+  transform: translateY(-50%) scale(1.08);
+}
+
+.password-toggle:active {
+  transform: translateY(-50%) scale(0.98);
 }
 
 .animated-search {
@@ -232,5 +285,14 @@
   }
   50% {
     transform: scale(1.05);
+  }
+}
+
+@keyframes glowShift {
+  0%, 100% {
+    box-shadow: 0 0 0 rgba(96, 165, 250, 0.0);
+  }
+  50% {
+    box-shadow: 0 0 18px rgba(96, 165, 250, 0.55);
   }
 }
