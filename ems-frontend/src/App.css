@@ -25,11 +25,11 @@
   width: 42px;
   height: 42px;
   border-radius: 12px;
-  background: rgba(255, 255, 255, 0.2);
+  background: linear-gradient(135deg, #fef3c7 0%, #fb923c 50%, #f97316 100%);
   font-family: 'Pacifico', 'Caveat', 'Inter', sans-serif;
   font-weight: 600;
   letter-spacing: 1px;
-  color: #fff;
+  color: #0f172a;
   animation: none;
 }
 
@@ -38,20 +38,49 @@
   font-weight: 700;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  background: linear-gradient(90deg, #ffffff 0%, #93c5fd 50%, #e0f2fe 100%);
+  background: linear-gradient(90deg, #fef3c7 0%, #fb923c 50%, #f97316 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  text-shadow: 0 2px 8px rgba(59, 130, 246, 0.35);
+  text-shadow: 0 2px 8px rgba(249, 115, 22, 0.35);
 }
 
 .navbar .nav-link {
-  color: rgba(255, 255, 255, 0.85);
+  color: #fff;
+  -webkit-text-fill-color: #fff;
+  background: none;
   font-weight: 500;
 }
 
-.navbar .nav-link.active {
-  color: #fff;
+.navbar .nav-link.active,
+.navbar .nav-link[aria-current="page"],
+.navbar .nav-link.is-active {
+  background: linear-gradient(90deg, #fef3c7 0%, #fb923c 50%, #f97316 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent !important;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 2px 8px rgba(249, 115, 22, 0.35);
+}
+
+.navbar .nav-link.btn,
+.navbar .nav-link.btn.btn-light,
+.navbar .nav-link.btn.btn-outline-light {
+  color: #fff !important;
+  background: transparent !important;
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.navbar .nav-link.btn.active,
+.navbar .nav-link.btn[aria-current="page"],
+.navbar .nav-link.btn.is-active {
+  background: linear-gradient(90deg, #fef3c7 0%, #fb923c 50%, #f97316 100%) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  color: transparent !important;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 2px 8px rgba(249, 115, 22, 0.35);
+  border-color: rgba(255, 255, 255, 0.65);
 }
 
 .page-card {
@@ -145,7 +174,7 @@
   margin-left: 0.5rem;
   font-size: 0.95rem;
   color: #0f172a;
-  width: 210px;
+  width: 100px;
   transition: width 0.35s ease;
 }
 
@@ -169,7 +198,7 @@
 
 .animated-search:focus-within .animated-search__input,
 .animated-search.is-active .animated-search__input {
-  width: 340px;
+  width: 380px;
 }
 
 .page-header {

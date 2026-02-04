@@ -135,7 +135,7 @@ const ListEmployeeComponent = () => {
                 <h2 className='page-title'>Employees</h2>
                 <p className='page-subtitle'>Manage your team, update records, and keep everything organized.</p>
             </div>
-            <button className='btn btn-primary btn-lg shadow-sm' onClick={addNewEmployee}>Add Employee</button>
+            {/* <button className='btn btn-primary btn-lg shadow-sm' onClick={addNewEmployee}>Add Employee</button> */}
         </div>
         <div className='d-flex flex-wrap gap-2 align-items-center mb-3'>
             <div className={`animated-search ${searchQuery ? 'is-active' : ''}`}>

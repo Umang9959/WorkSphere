@@ -36,10 +36,18 @@ const HeaderComponent = () => {
             {loggedIn && (
               <>
                 <li className='nav-item'>
-                  <NavLink className='nav-link' to='/employees'>Employees</NavLink>
+                  <NavLink
+                    className={({ isActive }) => `nav-link${isActive ? ' is-active' : ''}`}
+                    to='/employees'
+                  >
+                    Employees
+                  </NavLink>
                 </li>
                 <li className='nav-item'>
-                  <NavLink className='nav-link btn btn-sm btn-light text-primary px-3' to='/add-employee'>
+                  <NavLink
+                    className={({ isActive }) => `nav-link btn btn-sm btn-light text-primary px-3${isActive ? ' is-active' : ''}`}
+                    to='/add-employee'
+                  >
                     Add Employee
                   </NavLink>
                 </li>
