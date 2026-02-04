@@ -20,4 +20,9 @@ export const getAuth = () => {
   }
 };
 
-export const isAuthenticated = () => Boolean(getAuth());
+export const isAuthenticated = () => Boolean(getAuthToken());
+
+export const getAuthToken = () => {
+  const auth = getAuth();
+  return auth?.token || null;
+};

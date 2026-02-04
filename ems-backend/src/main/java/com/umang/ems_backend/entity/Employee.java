@@ -29,4 +29,7 @@ public class Employee {
 
     @Column(name = "phone_number")
     private String phoneNumber;
+
+    @Column(name = "department")
+    private String department;
 }

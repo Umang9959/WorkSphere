@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { loginUser } from '../services/AuthService'
+import { loginUser, registerUser } from '../services/AuthService'
 import { setAuth } from '../services/AuthStorage'
 
 const LoginComponent = () => {
@@ -12,6 +12,7 @@ const LoginComponent = () => {
     password: ''
   })
   const [apiError, setApiError] = useState('')
+  const [isSignUp, setIsSignUp] = useState(false)
 
   const navigator = useNavigate()
 
@@ -53,12 +54,26 @@ const LoginComponent = () => {
 
     if (validateForm()) {
       setApiError('')
-      loginUser({ email, password }).then((response) => {
-        setAuth({ email: response?.data?.email || email })
+      const action = isSignUp ? registerUser : loginUser
+      action({ email, password }).then((response) => {
+        if (isSignUp) {
+          setIsSignUp(false)
+          setPassword('')
+          setApiError('Account created. Please sign in.')
+          return
+        }
+
+        setAuth({
+          email: response?.data?.email || email,
+          role: response?.data?.role,
+          token: response?.data?.token
+        })
         navigator('/employees')
       }).catch((error) => {
         if (error?.response?.status === 401) {
           setApiError('Invalid email or password')
+        } else if (error?.response?.status === 409) {
+          setApiError('Email already taken')
         } else {
           setApiError('Something went wrong. Please try again.')
         }
@@ -126,9 +141,30 @@ const LoginComponent = () => {
               </div>
 
               <div className='d-grid'>
-                <button className='btn btn-primary btn-lg' type='submit'>Sign In</button>
+                <button className='btn btn-primary btn-lg' type='submit'>
+                  {isSignUp ? 'Create Account' : 'Sign In'}
+                </button>
               </div>
             </form>
+            <div className='text-center mt-3'>
+              {isSignUp ? (
+                <button
+                  type='button'
+                  className='btn btn-link'
+                  onClick={() => setIsSignUp(false)}
+                >
+                  Back to Sign In
+                </button>
+              ) : (
+                <button
+                  type='button'
+                  className='btn btn-link'
+                  onClick={() => setIsSignUp(true)}
+                >
+                  Create new account
+                </button>
+              )}
+            </div>
           </div>
         </div>
       </div>

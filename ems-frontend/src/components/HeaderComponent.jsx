@@ -1,10 +1,12 @@
 import React from 'react'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
-import { clearAuth, isAuthenticated } from '../services/AuthStorage'
+import { clearAuth, getAuth, isAuthenticated } from '../services/AuthStorage'
 
 const HeaderComponent = () => {
   const navigator = useNavigate()
   const loggedIn = isAuthenticated()
+  const auth = getAuth()
+  const isAdmin = auth?.role === 'ADMIN'
 
   function handleLogout() {
     clearAuth()
@@ -40,17 +42,19 @@ const HeaderComponent = () => {
                     className={({ isActive }) => `nav-link${isActive ? ' is-active' : ''}`}
                     to='/employees'
                   >
-                    Employees
+                    All Employees
                   </NavLink>
                 </li>
-                <li className='nav-item'>
-                  <NavLink
-                    className={({ isActive }) => `nav-link btn btn-sm btn-light text-primary px-3${isActive ? ' is-active' : ''}`}
-                    to='/add-employee'
-                  >
-                    Add Employee
-                  </NavLink>
-                </li>
+                {isAdmin && (
+                  <li className='nav-item'>
+                    <NavLink
+                      className={({ isActive }) => `nav-link btn btn-sm btn-light text-primary px-3${isActive ? ' is-active' : ''}`}
+                      to='/add-employee'
+                    >
+                      Add Employee
+                    </NavLink>
+                  </li>
+                )}
                 <li className='nav-item'>
                   <button className='nav-link btn btn-sm btn-outline-light px-3' type='button' data-bs-toggle='modal' data-bs-target='#logoutModal'>
                     Logout

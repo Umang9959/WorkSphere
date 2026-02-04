@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import { deleteEmployee, listEmployees, searchEmployees } from '../services/EmployeeService'
 import { useNavigate } from 'react-router-dom'
-import { isAuthenticated } from '../services/AuthStorage'
+import { getAuth, isAuthenticated } from '../services/AuthStorage'
 
 const ListEmployeeComponent = () => {
 
@@ -13,6 +13,7 @@ const ListEmployeeComponent = () => {
     const [employeeToDelete, setEmployeeToDelete] = useState(null)
 
     const navigator = useNavigate();
+    const isAdmin = getAuth()?.role === 'ADMIN'
 
     useEffect(() => {
         getAllEmployees(0);
@@ -132,10 +133,10 @@ const ListEmployeeComponent = () => {
     <div className='page-card'>
         <div className='page-header'>
             <div>
-                <h2 className='page-title'>Employees</h2>
+                <h2 className='page-title'>All Employees</h2>
                 <p className='page-subtitle'>Manage your team, update records, and keep everything organized.</p>
             </div>
-            {/* <button className='btn btn-primary btn-lg shadow-sm' onClick={addNewEmployee}>Add Employee</button> */}
+            
         </div>
         <div className='d-flex flex-wrap gap-2 align-items-center mb-3'>
             <div className={`animated-search ${searchQuery ? 'is-active' : ''}`}>
@@ -163,7 +164,8 @@ const ListEmployeeComponent = () => {
                     <th>Employee Last Name</th>
                     <th>Employee Email Id</th>
                     <th>Employee Phone</th>
-                    <th>Actions</th>
+                    <th>Department</th>
+                    {isAdmin && <th>Actions</th>}
                 </tr>
             </thead>
             <tbody>
@@ -175,20 +177,23 @@ const ListEmployeeComponent = () => {
                             <td>{employee.lastName}</td>
                             <td>{employee.email}</td>
                             <td>{employee.phoneNumber}</td>
-                            <td>
-                                <div className='d-flex gap-2 flex-wrap'>
-                                    <button className='btn btn-outline-primary btn-sm' onClick={() => updateEmployee(employee.id)}>Update</button>
-                                    <button
-                                        className='btn btn-outline-danger btn-sm'
-                                        type='button'
-                                        data-bs-toggle='modal'
-                                        data-bs-target='#deleteEmployeeModal'
-                                        onClick={() => setEmployeeToDelete({ id: employee.id, name: `${employee.firstName} ${employee.lastName}` })}
-                                    >
-                                        Delete
-                                    </button>
-                                </div>
-                            </td>
+                            <td>{employee.department}</td>
+                            {isAdmin && (
+                                <td>
+                                    <div className='d-flex gap-2 flex-wrap'>
+                                        <button className='btn btn-outline-primary btn-sm' onClick={() => updateEmployee(employee.id)}>Update</button>
+                                        <button
+                                            className='btn btn-outline-danger btn-sm'
+                                            type='button'
+                                            data-bs-toggle='modal'
+                                            data-bs-target='#deleteEmployeeModal'
+                                            onClick={() => setEmployeeToDelete({ id: employee.id, name: `${employee.firstName} ${employee.lastName}` })}
+                                        >
+                                            Delete
+                                        </button>
+                                    </div>
+                                </td>
+                            )}
                         </tr>)
                 }
             </tbody>
@@ -217,32 +222,34 @@ const ListEmployeeComponent = () => {
                 </ul>
             </nav>
         )}
-        <div className='modal fade' id='deleteEmployeeModal' tabIndex='-1' aria-hidden='true'>
-            <div className='modal-dialog modal-dialog-centered'>
-                <div className='modal-content'>
-                    <div className='modal-header'>
-                        <h5 className='modal-title'>Confirm delete</h5>
-                        <button type='button' className='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
-                    </div>
-                    <div className='modal-body'>
-                        {employeeToDelete?.name
-                            ? `Are you sure you want to delete ${employeeToDelete.name}?`
-                            : 'Are you sure you want to delete this employee?'}
-                    </div>
-                    <div className='modal-footer'>
-                        <button type='button' className='btn btn-outline-secondary' data-bs-dismiss='modal'>Cancel</button>
-                        <button
-                            type='button'
-                            className='btn btn-danger'
-                            data-bs-dismiss='modal'
-                            onClick={confirmDeleteEmployee}
-                        >
-                            Delete
-                        </button>
+        {isAdmin && (
+            <div className='modal fade' id='deleteEmployeeModal' tabIndex='-1' aria-hidden='true'>
+                <div className='modal-dialog modal-dialog-centered'>
+                    <div className='modal-content'>
+                        <div className='modal-header'>
+                            <h5 className='modal-title'>Confirm delete</h5>
+                            <button type='button' className='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
+                        </div>
+                        <div className='modal-body'>
+                            {employeeToDelete?.name
+                                ? `Are you sure you want to delete ${employeeToDelete.name}?`
+                                : 'Are you sure you want to delete this employee?'}
+                        </div>
+                        <div className='modal-footer'>
+                            <button type='button' className='btn btn-outline-secondary' data-bs-dismiss='modal'>Cancel</button>
+                            <button
+                                type='button'
+                                className='btn btn-danger'
+                                data-bs-dismiss='modal'
+                                onClick={confirmDeleteEmployee}
+                            >
+                                Delete
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        )}
     </div>
   )
 }

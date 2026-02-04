@@ -7,6 +7,7 @@ import com.umang.ems_backend.entity.AppUser;
 import com.umang.ems_backend.exception.DuplicateResourceException;
 import com.umang.ems_backend.exception.UnauthorizedException;
 import com.umang.ems_backend.repository.AppUserRepository;
+import com.umang.ems_backend.security.JwtService;
 import com.umang.ems_backend.service.AuthService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 public class AuthServiceImpl implements AuthService {
     private final AppUserRepository appUserRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
 
     @Override
     public AuthResponse register(RegisterRequest request) {
@@ -33,10 +35,11 @@ public class AuthServiceImpl implements AuthService {
         AppUser user = new AppUser();
         user.setEmail(email);
         user.setPasswordHash(passwordEncoder.encode(password));
-        user.setRole(request.getRole() == null || request.getRole().trim().isEmpty() ? "USER" : request.getRole().trim());
+        user.setRole("USER");
 
         AppUser savedUser = appUserRepository.save(user);
-        return new AuthResponse("Registration successful", savedUser.getEmail());
+        String token = jwtService.generateToken(savedUser.getEmail(), savedUser.getRole());
+        return new AuthResponse("Registration successful", savedUser.getEmail(), savedUser.getRole(), token);
     }
 
     @Override
@@ -54,6 +57,7 @@ public class AuthServiceImpl implements AuthService {
             throw new UnauthorizedException("Invalid email or password");
         }
 
-        return new AuthResponse("Login successful", user.getEmail());
+        String token = jwtService.generateToken(user.getEmail(), user.getRole());
+        return new AuthResponse("Login successful", user.getEmail(), user.getRole(), token);
     }
 }

@@ -9,13 +9,15 @@ const EmployeeComponent = () => {
     const [email, setEmail] = useState('')
     const [phoneNumber, setPhoneNumber] = useState('')
     const [countryCode, setCountryCode] = useState('+91')
+    const [department, setDepartment] = useState('')
 
     const {id} = useParams();
     const [errors, setErrors] = useState({
         firstName: '',
         lastName: '',
         email: '',
-        phoneNumber: ''
+        phoneNumber: '',
+        department: ''
     })
 
     const navigator = useNavigate();
@@ -27,6 +29,7 @@ const EmployeeComponent = () => {
                 setFirstName(response.data.firstName);
                 setLastName(response.data.lastName);
                 setEmail(response.data.email);
+                setDepartment(response.data.department || '');
                 const phoneValue = response.data.phoneNumber || '';
                 const codes = ['+91', '+1', '+44', '+61', '+81', '+49', '+971'];
                 const matchedCode = codes.find((code) => phoneValue.startsWith(code));
@@ -53,7 +56,8 @@ const EmployeeComponent = () => {
                 firstName,
                 lastName,
                 email,
-                phoneNumber: `${countryCode}${phoneNumber.trim()}`
+                phoneNumber: `${countryCode}${phoneNumber.trim()}`,
+                department
             }
             console.log(employee)
 
@@ -165,6 +169,13 @@ const EmployeeComponent = () => {
             valid = false;
         }
 
+        if(department.trim()){
+            errorsCopy.department = '';
+        } else {
+            errorsCopy.department = 'Department is required';
+            valid = false;
+        }
+
         setErrors(errorsCopy);
         
         return valid;
@@ -181,12 +192,14 @@ const EmployeeComponent = () => {
   return (
     <div className='row justify-content-center'>
         <div className='col-12 col-lg-7'>
-            <div className='card page-card shadow-sm'>
-                <div className='card-header bg-white border-0 pt-4 px-4'>
-                    {pageTitle()}
-                    <p className='page-subtitle mb-0'>Keep employee details accurate and up to date.</p>
+            <div className='page-card'>
+                <div className='page-header'>
+                    <div>
+                        {pageTitle()}
+                        <p className='page-subtitle mb-0'>Keep employee details accurate and up to date.</p>
+                    </div>
                 </div>
-                <div className='card-body px-4 pb-4'>
+                <div>
                     <form>
                         <div className='form-group mb-3'>
                             <label className='form-label'>First Name</label>
@@ -195,7 +208,7 @@ const EmployeeComponent = () => {
                                 placeholder='Enter employee first name'
                                 name='firstName'
                                 value={firstName}
-                                className={`form-control form-control-lg ${ errors.firstName ? 'is-invalid': '' }`}
+                                className={`form-control ${ errors.firstName ? 'is-invalid': '' }`}
                                 onChange={(e) => setFirstName(e.target.value)}
                             >
                             </input>
@@ -209,7 +222,7 @@ const EmployeeComponent = () => {
                                 placeholder='Enter employee last name'
                                 name='lastName'
                                 value={lastName}
-                                className={`form-control form-control-lg ${ errors.lastName ? 'is-invalid': '' }`}
+                                className={`form-control ${ errors.lastName ? 'is-invalid': '' }`}
                                 onChange={(e) => setLastName(e.target.value)}
                             >
                             </input>
@@ -223,7 +236,7 @@ const EmployeeComponent = () => {
                                 placeholder='Enter employee email'
                                 name='email'
                                 value={email}
-                                className={`form-control form-control-lg ${ errors.email ? 'is-invalid': '' }`}
+                                className={`form-control ${ errors.email ? 'is-invalid': '' }`}
                                 onChange={(e) => setEmail(e.target.value)}
                             >
                             </input>
@@ -232,7 +245,7 @@ const EmployeeComponent = () => {
 
                         <div className='form-group mb-4'>
                             <label className='form-label'>Phone Number</label>
-                            <div className='input-group input-group-lg'>
+                            <div className='input-group'>
                                 <select
                                     className='form-select form-select-sm'
                                     value={countryCode}
@@ -260,9 +273,29 @@ const EmployeeComponent = () => {
                             { errors.phoneNumber && <div className='invalid-feedback'> { errors.phoneNumber} </div> }
                         </div>
 
-                        <div className='d-flex gap-2'>
-                            <button className='btn btn-primary btn-lg' onClick={saveOrUpdateEmployee} >Save</button>
-                            <button className='btn btn-outline-secondary btn-lg' type='button' onClick={() => navigator('/employees')}>Cancel</button>
+                        <div className='form-group mb-4'>
+                            <label className='form-label'>Department</label>
+                            <select
+                                className={`form-select ${ errors.department ? 'is-invalid': '' }`}
+                                name='department'
+                                value={department}
+                                onChange={(e) => setDepartment(e.target.value)}
+                            >
+                                <option value=''>Select department</option>
+                                <option value='Engineering & Tech'>Engineering & Tech</option>
+                                <option value='Finance'>Finance</option>
+                                <option value='Business Development'>Business Development</option>
+                                <option value='CEO & Director'>CEO & Director</option>
+                                <option value='HR'>HR</option>
+                                <option value='IT & Admin'>IT & Admin</option>
+                                <option value='Sales'>Sales</option>
+                            </select>
+                            { errors.department && <div className='invalid-feedback'> { errors.department} </div> }
+                        </div>
+
+                        <div className='d-flex gap-2 justify-content-center'>
+                            <button className='btn btn-primary' onClick={saveOrUpdateEmployee} >Save</button>
+                            <button className='btn btn-outline-secondary' type='button' onClick={() => navigator('/employees')}>Cancel</button>
                         </div>
                     </form>
 
