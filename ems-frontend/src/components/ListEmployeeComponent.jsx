@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import { deleteEmployee, listEmployees, searchEmployees } from '../services/EmployeeService'
 import { useNavigate } from 'react-router-dom'
+import { isAuthenticated } from '../services/AuthStorage'
 
 const ListEmployeeComponent = () => {
 
@@ -15,6 +16,30 @@ const ListEmployeeComponent = () => {
 
     useEffect(() => {
         getAllEmployees(0);
+    }, [])
+
+    useEffect(() => {
+        if (!isAuthenticated()) {
+            return undefined
+        }
+
+        const handlePopState = () => {
+            const modalElement = document.getElementById('logoutModal')
+            if (modalElement && window.bootstrap?.Modal) {
+                const modal = window.bootstrap.Modal.getOrCreateInstance(modalElement)
+                modal.show()
+                window.history.pushState(null, '', window.location.href)
+            } else {
+                window.history.pushState(null, '', window.location.href)
+            }
+        }
+
+        window.history.pushState(null, '', window.location.href)
+        window.addEventListener('popstate', handlePopState)
+
+        return () => {
+            window.removeEventListener('popstate', handlePopState)
+        }
     }, [])
 
     useEffect(() => {

@@ -8,7 +8,7 @@ const HeaderComponent = () => {
 
   function handleLogout() {
     clearAuth()
-    navigator('/login')
+    navigator('/login', { replace: true })
   }
 
   return (
