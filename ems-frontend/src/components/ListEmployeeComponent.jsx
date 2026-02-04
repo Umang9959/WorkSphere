@@ -38,11 +38,16 @@ const ListEmployeeComponent = () => {
     }
 
   return (
-    <div className='container'>
-
-        <h2 className='text-center'>List of Employees</h2>
-        <button className='btn btn-primary mb-2' onClick={addNewEmployee}>Add Employee</button>
-        <table className='table table-striped table-bordered'>
+    <div className='page-card'>
+        <div className='page-header'>
+            <div>
+                <h2 className='page-title'>Employees</h2>
+                <p className='page-subtitle'>Manage your team, update records, and keep everything organized.</p>
+            </div>
+            <button className='btn btn-primary btn-lg shadow-sm' onClick={addNewEmployee}>Add Employee</button>
+        </div>
+        <div className='table-responsive'>
+        <table className='table table-hover align-middle table-theme'>
             <thead>
                 <tr>
                     <th>Employee Id</th>
@@ -61,15 +66,16 @@ const ListEmployeeComponent = () => {
                             <td>{employee.lastName}</td>
                             <td>{employee.email}</td>
                             <td>
-                                <button className='btn btn-info' onClick={() => updateEmployee(employee.id)}>Update</button>
-                                <button className='btn btn-danger' onClick={() => removeEmployee(employee.id)}
-                                    style={{marginLeft: '10px'}}
-                                >Delete</button>
+                                <div className='d-flex gap-2 flex-wrap'>
+                                    <button className='btn btn-outline-primary btn-sm' onClick={() => updateEmployee(employee.id)}>Update</button>
+                                    <button className='btn btn-outline-danger btn-sm' onClick={() => removeEmployee(employee.id)}>Delete</button>
+                                </div>
                             </td>
                         </tr>)
                 }
             </tbody>
         </table>
+        </div>
     </div>
   )
 }

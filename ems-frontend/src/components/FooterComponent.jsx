@@ -2,12 +2,12 @@ import React from 'react'
 
 const FooterComponent = () => {
   return (
-    <div>
-        <footer className='footer'>
-            <span>All rights reserved 2026 by Umang Mathur</span>
-        </footer>
-
+  <footer className='app-footer'>
+    <div className='container d-flex flex-column flex-md-row align-items-center justify-content-between gap-2'>
+      <span>All rights reserved 2026 by Umang Mathur</span>
+      <span className='footer-muted'>Built with React &amp; Vite</span>
     </div>
+  </footer>
   )
 }
 

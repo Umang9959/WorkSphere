@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+	font-family: 'Inter', system-ui, -apple-system, sans-serif;
+	color: #0f172a;
+	background-color: #f1f5f9;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+	background: linear-gradient(180deg, rgba(226, 232, 240, 0.8), rgba(248, 250, 252, 1));
+	min-height: 100vh;
+}
+
+#root {
+	min-height: 100vh;
+}
+
+a {
+	text-decoration: none;
+}
+
+.btn {
+	transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.2s ease;
+}
+
+.btn:hover {
+	transform: translateY(-1px);
+	box-shadow: 0 10px 20px rgba(15, 23, 42, 0.12);
+}
+
+.btn-primary {
+	background: linear-gradient(135deg, #2563eb, #1d4ed8);
+	border: none;
+}
+
+.btn-primary:hover {
+	background: linear-gradient(135deg, #1d4ed8, #1e40af);
+}
+
+.nav-link.btn {
+	transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.nav-link.btn:hover {
+	transform: translateY(-1px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	* {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+		scroll-behavior: auto !important;
+	}
+}
