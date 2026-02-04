@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -56,5 +57,32 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         employeeRepository.deleteById(employeeId);
 
+    }
+
+    @Override
+    public List<EmployeeDto> searchEmployees(String query) {
+        String searchValue = query == null ? "" : query.trim();
+        if (searchValue.isEmpty()) {
+            return getAllEmployees();
+        }
+
+        List<Employee> employees = employeeRepository
+                .findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCaseOrEmailContainingIgnoreCase(
+                        searchValue,
+                        searchValue,
+                        searchValue
+                );
+
+        if (searchValue.matches("\\d+")) {
+            Long id = Long.parseLong(searchValue);
+            Optional<Employee> employeeById = employeeRepository.findById(id);
+            if (employeeById.isPresent() && employees.stream().noneMatch(e -> e.getId().equals(id))) {
+                employees.add(employeeById.get());
+            }
+        }
+
+        return employees.stream()
+                .map(EmployeeMapper::maptoEmployeeDto)
+                .collect(Collectors.toList());
     }
 }

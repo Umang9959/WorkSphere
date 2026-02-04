@@ -15,4 +15,6 @@ public interface EmployeeService {
 
     void deleteEmployee(Long employeeId);
 
+    List<EmployeeDto> searchEmployees(String query);
+
 }

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin("*")
 @AllArgsConstructor
 @RequestMapping("/api/employees")
 public class EmployeeController {
@@ -35,6 +36,12 @@ public class EmployeeController {
     @GetMapping
     public ResponseEntity<List<EmployeeDto>> getAllEmployees() {
         List<EmployeeDto> employees = employeeService.getAllEmployees();
+        return ResponseEntity.ok(employees);
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<EmployeeDto>> searchEmployees(@RequestParam("query") String query) {
+        List<EmployeeDto> employees = employeeService.searchEmployees(query);
         return ResponseEntity.ok(employees);
     }
 
