@@ -1,4 +1,4 @@
-# WorkSphere - An Emplyee Managment System
+# WorkSphere - An Employee Management System
 
 ## About this
 
