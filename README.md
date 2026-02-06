@@ -19,8 +19,10 @@ WorkSphere is a modern employee management platform built with React and Spring 
 
 ![Login](docs/images/ui-login.png)
 ![Employees](docs/images/ui-employees.png)
+![Add Employees](docs/images/ui-addemployee.png)
 
 ## Tech Stack
+
 
 **Frontend**
 - React + Vite

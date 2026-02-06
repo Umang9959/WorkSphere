@@ -50,8 +50,9 @@ const HeaderComponent = () => {
                     <NavLink
                       className={({ isActive }) => `nav-link btn btn-sm btn-light text-primary px-3${isActive ? ' is-active' : ''}`}
                       to='/add-employee'
+                      
                     >
-                      Add Employee
+                      Add Employees
                     </NavLink>
                   </li>
                 )}
