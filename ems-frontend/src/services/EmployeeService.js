@@ -1,6 +1,6 @@
 import apiClient from "./apiClient";
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '';
+const API_BASE_URL = 'https://worksphere-1-irwl.onrender.com';
 const REST_API_BASE_URL = `${API_BASE_URL}/api/employees`;
 
 export const listEmployees = (page = 0, size = 20, departments = [], sortDir = 'asc') => {
